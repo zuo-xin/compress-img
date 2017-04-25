@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>意见反馈</title>
+    <style>
+    /* reset.css */
+    html,
+    body {
+        background: #ffffff;
+    }
+    html,
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    form,
+    fieldset,
+    legend,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        font-family: ' Microsoft YaHei UI', '微软雅黑', 'PingFang SC', 'Heiti SC', ' Droid Sans';
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    img {
+        border: 0;
+    }
+    a,button,input{-webkit-tap-highlight-color:transparent;}
+    address,
+    caption,
+    cite,
+    code,
+    dfn,
+    em,
+    th,
+    var,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: normal;
+    }
+    
+    ol,
+    ul {
+        list-style: none;
+    }
+    .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+    input,textarea{
+        -webkit-appearance: none;
+
+    }
+    
+    .clearfix {
+        zoom: 1;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: none;
+    }
+    
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+        width: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        -webkit-text-size-adjust: none;
+    }
+    #mask {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        -moz-opacity: 0.3;
+        z-index: 950;
+        display: none;
+    }
+    
+    #hint {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        pointer-events: none;
+        text-align: center;
+        opacity: 0;
+        bottom: 70px;
+        font-size: 14px;
+        -webkit-transition: opacity 400ms ease-in-out;
+        transition: opacity 400ms ease-in-out;
+        z-index: 1000;
+    }
+    
+    #hint>.text {
+        display: inline-block;
+        color: #eaeaea;
+        line-height: 20px;
+        padding: 5px 12px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 10px;
+        line-height: 20px;
+        padding: 5px 12px;
+        box-shadow: 0 0 3px silver;
+        margin: 3px;
+        white-space: pre-wrap;
+        vertical-align: top;
+    }
+    #feedback-form{
+        padding: 20px 0 40px 0;
+        position: relative;
+        width: 90%;
+        margin: 0 auto;
+    }
+    #textarea{
+        display: block;
+        margin: 0 auto;
+        padding: 2%;
+        width: 100%;
+        outline: none;
+        border: 1px solid #d7d7d7;
+        border-radius: 8px;
+        min-height: 180px;
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+    .feedback-info{
+        color: #4a4a4a;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 24px;
+    }
+    .feedback-info>.need{
+        color: #f46903;
+    }
+    .feedback-info-remark{
+        color: #4a4a4a;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .img-list{
+        margin: 18px 0 30px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .img-upload{
+        width: 30%;
+        background-repeat: no-repeat;
+        background-size:100% 100%;
+        background-image: url(./images/add.png); 
+
+    }
+    .img-upload .file{
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .img-item{
+        border: 1px solid #cccccc;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin-right: 10px;
+        position: relative;
+    }
+    .img-item .del{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-image: url(./images/del.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        top: 0;
+        left: 0;
+        z-index: 100;
+    }
+    .btn{
+        display: block;
+        width: 90%;
+        margin: 40px auto 0 auto;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        color: #fff;
+        background: #ff6e01;
+        border: none;
+        border-radius: 6px;
+        text-align: center;
+        outline: none;
+    }
+    .type-list{
+        margin: 10px 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+                flex-direction: column;
+    }
+    .item-type{
+        margin: 4px 0;
+        color: #505050;
+        font-size: 14px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: center;
+
+    }
+    .item-type .cir{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background:url(./images/cir.png) no-repeat center;
+        background-size: contain;
+        margin-right: 6px;
+        -ms-flex-item-align:start;align-self:flex-start;
+    }
+    .item-type .selcir{
+        background:url(./images/selcir.png) no-repeat center;
+        background-size: contain;
+    }
+    .item-type .content{
+        -webkit-box-flex: 1;-ms-flex: 1;flex: 1;
+    }
+    .disable{
+        background: #bababa;
+    }
+    #step-one{
+        
+    }
+    #step-two{
+         display: none; 
+        padding: 60px 0 0 0;
+    }
+    #step-three{
+         display: none; 
+        padding: 60px 0 0 0;
+    }
+    .two-img-box{
+        width: 16%;
+        margin: 0 auto;
+    }
+    .two-img{
+        max-width: 100%;
+    }
+    .two-h2{
+        font-size: 20px;
+        color: #4a4a4a;
+        text-align: center;
+        font-weight: bold;
+        padding: 20px 0 14px 0;
+    }
+    .two-info{
+        font-size: 14px;
+        color: #4a4a4a;
+        text-align: center;
+        line-height: 26px;
+        padding: 0 52px;
+    }
+    .three-img-box{
+        width: 16%;
+        margin: 0 auto;
+    }
+    .three-img{
+        max-width: 100%;
+    }
+    .three-h2{
+        font-size: 20px;
+        color: #4a4a4a;
+        text-align: center;
+        font-weight: bold;
+        padding: 20px 0 14px 0;
+    }
+    .three-info{
+        font-size: 14px;
+        color: #4a4a4a;
+        text-align: center;
+        line-height: 26px;
+        padding: 0 32px;
+    }
+    .three-info>a{
+        color: #4a4a4a;
+    }
+    
+    </style>
+</head>
+
+<body>
+<div id="step-one">
+    <form id="feedback-form">
+        <p class="feedback-info"><span class="need">*</span>意见反馈内容</p>
+        <textarea maxlength="160"  id="textarea" placeholder="欢迎来到一起好理财意见反馈区，您在使用APP过程中遇到的任何问题均可写在此处，我们会认真听取并及时处理，感谢您的支持！"></textarea>
+        <p class="feedback-info">若您有相应的截图附件能够提供给我们就更好了</p>
+        <p class="feedback-info-remark">（每张图片限制5.0M以内，最多3张）</p>
+
+        <div class="img-list">
+            <div id="upload" class="img-upload"><input type="file" class="file" accept="image/*" multiple></div>
+        </div>
+        <p class="feedback-info"><span class="need">*</span>请选择意见反馈的类型</p>
+        
+        <ul class="type-list">
+            <li class="item-type"><span class="cir" data-id="1"></span><span class="content">2233</span></li>
+            <li class="item-type"><span class="cir" data-id="2"></span class="content">2233</li>
+            <li class="item-type"><span class="cir" data-id="3"></span class="content">2233</li>
+        </ul>
+
+        <button class="btn disable" type="submit">提交</button>
+    </form>
+</div>
+
+<div id="step-two">
+    <div class="two-img-box"><img class="two-img" src="./images/ok.png" alt=""></div>
+    <h2 class="two-h2">意见反馈提交成功</h2>
+    <p class="two-info">感谢您对一起好理财的理解与支持！</p>
+</div>
+<div id="step-three">
+    <div class="three-img-box"><img class="three-img" src="./images/err.png" alt=""></div>
+    <h2 class="three-h2">意见反馈提交失败</h2>
+    <p class="three-info">时间段内多次提交，请稍后再试<br>
+    如需紧急协助，请致电客服热线：<a href="tel:4009001717">400-900-1717</a></p>
+</div>
+    
+    <div id="mask"></div>
+    <div id="loading">
+        <div></div>
+    </div>
+    <div id="hint">
+        <div class="text">_</div>
+    </div>
+    <script src="./util.js"></script>
+    <script src="./canvas-to-blob.js"></script>
+    <script>
+    window.addEventListener('DOMContentLoaded', function(){
+        var stepOne = document.querySelector("#step-one"),
+            stepTwo = document.querySelector("#step-two"),
+            stepThree = document.querySelector("#step-three"),
+            feedbackForm = document.querySelector("#feedback-form"),
+            textarea = document.querySelector("#textarea"),
+            imgList = document.querySelector(".img-list"),
+            upload = document.querySelector("#upload"),
+            file = document.querySelector(".file"),
+            itemType = document.querySelectorAll(".type-list .item-type"),
+            typeList = document.querySelector(".type-list"),
+            btn = document.querySelector(".btn"),
+            fileStyle  = window.getComputedStyle(upload, null),
+            imgH = fileStyle.width,
+            canvasArr=[],
+            fileArr=[],
+            maxsize = 5*1024*1024,
+            index=0;
+       
+        upload.style.height = imgH;
+       
+        
+        file.addEventListener("change",function() {
+           
+            var imgnum = document.querySelectorAll(".img-item");
+            imgnum = imgnum?imgnum.length:0;
+            index = imgnum;
+            if (!this.files.length){
+                return;
+            }
+            var files = Array.prototype.slice.call(this.files);
+            if ((files.length + index) > 3) {
+                util.hint("最多只可上传3张图片");
+                return;
+            }
+            index+=files.length;
+            if(index >=3){
+                upload.style.display = "none";
+            }
+            files.forEach(function(file, i) {
+                var reader = new FileReader();
+                var imgItem = document.createElement("div")
+                    canvas = document.createElement("canvas"),
+                    ctx = canvas.getContext('2d');
+
+                imgItem.className = "img-item";
+                imgItem.style.width = imgH;
+                imgItem.style.height = imgH;
+                imgItem.innerHTML = '<span class="del"></span>'
+                imgList.insertBefore(imgItem,upload);
+                
+                
+                reader.onload = function() {
+                    var img = new Image(); 
+                    img.src = this.result;
+                    imgItem.style.backgroundImage = "url(" + this.result + ")";
+                    if (this.result.length <= maxsize) {
+                        img = null;
+                        fileArr.push(file);
+                       
+                       
+                        return;
+                    }
+                    //      图片加载完毕之后进行压缩
+                    if (img.complete) {
+                        callback();
+                    } else {
+                        img.onload = callback;
+                    }
+                    function callback() {
+                        var initSize = img.src.length,
+                            width = img.width,
+                            height = img.height;
+                            
+                        var ratio;
+                        if ((ratio = initSize / maxsize) > 1) {
+                            width /= ratio;
+                            height /= ratio;
+                        } else {
+                            ratio = 1;
+                        }
+                        canvas.width = width;
+                        canvas.height = width;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        //进行最小压缩
+                        var ndata = canvas.toDataURL('image/jpeg', 0.1);
+                        //document.querySelector("#step-one").appendChild(canvas);
+                        canvasArr.push(canvas);
+                        img = null;
+                    }
+                    
+                };
+                reader.onerror = function() {
+                    util.hint('无法读取文件, 请重试');
+                    return;
+                };
+
+                imgItem.firstChild.addEventListener("click",function(e){
+                    e.stopPropagation();
+                    index -= 1;
+                    
+                    imgList.removeChild(imgItem);
+                    removeArr(canvasArr,canvas);
+                   
+                    if(index<3){
+                        upload.style.display = "block";
+                    }
+                    
+                })
+                reader.readAsDataURL(file);
+                
+            })
+        });
+        function removeArr(arr,val){
+            var index;
+            if(arr.length>0){
+                for(var i = 0;i<arr.length;i++){
+                    if(arr[i] === val){
+                        index = i
+                    }
+                }
+            }
+            arr.splice(index,1)
+        }
+
+        feedbackForm.addEventListener("submit",function(e){
+            e.preventDefault();
+            console.log(canvasArr);
+            console.log(fileArr);
+            
+            if(btn.classList.contains("disable")){
+                return
+            }else{
+                var formData = new FormData();
+                formData.append('format', 'json');
+                formData.append('feedback', textarea.value);
+                formData.append('type', document.querySelector(".selcir").dataset.id);
+                
+                if(fileArr.length){
+                    for(var i = 0;i<fileArr.length;i++){
+                        formData.append('files[]', fileArr[i].File)
+                    }
+                }
+                if(canvasArr.length){
+                    for(var j=0;j<canvasArr.length;j++){
+                        canvasArr[j].toBlob(function(blob) {
+                            formData.append('files[]', blob, 'image.png');
+                            },
+                            'image/png'
+                        );
+                    }
+                }
+                console.log(formData)
+            }
+        })
+
+
+
+
+
+        textarea.addEventListener("input",function(){
+            if(textarea.value.replace(/\s/g, '').length && typeList.querySelector(".selcir")){
+                btn.classList.remove("disable");
+            }else{
+                btn.classList.add("disable");
+            }
+        })
+
+
+        for (var k = 0; k < itemType.length; k++) {
+            itemType[k].onclick = (function(k) {
+                return function() {
+                    for(var j = 0;j<itemType.length;j++){
+                        itemType[j].querySelector(".cir").className = "cir";
+                    }
+                    if(itemType[k].querySelector(".cir").classList.contains("selcir")){
+                        itemType[k].querySelector(".cir").classList.remove("selcir");
+                    }else{
+                        itemType[k].querySelector(".cir").classList.add("selcir");
+                    }
+
+                    if(textarea.value.replace(/\s/g, '').length && typeList.querySelector(".selcir")){
+                        btn.classList.remove("disable");
+                    }else{
+                        btn.classList.add("disable");
+                    }
+                }
+            })(k);
+        }
+        
+    });
+    </script>
+</body>
+
+</html>
